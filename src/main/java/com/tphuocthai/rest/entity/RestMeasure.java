@@ -1,26 +1,24 @@
 package com.tphuocthai.rest.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+import javax.persistence.Entity;
+
 /**
  * RestMeasure entity
  * Created by tphuocthai on 7/9/16.
  */
-public class RestMeasure {
-    private Long id;
+@Entity
+@JsonIgnoreProperties(value = { "new" })
+public class RestMeasure extends AbstractPersistable<Long> {
     private String restMethodName;
     private String restMethod;
-    private Long timeInMiliseconds;
+    private Long timeInMilliseconds;
     private Integer createdBy;
     private Long createdAt;
     private Integer lastUpdatedBy;
     private Long lastUpdatedAt;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getRestMethodName() {
         return restMethodName;
@@ -38,12 +36,12 @@ public class RestMeasure {
         this.restMethod = restMethod;
     }
 
-    public Long getTimeInMiliseconds() {
-        return timeInMiliseconds;
+    public Long getTimeInMilliseconds() {
+        return timeInMilliseconds;
     }
 
-    public void setTimeInMiliseconds(Long timeInMiliseconds) {
-        this.timeInMiliseconds = timeInMiliseconds;
+    public void setTimeInMilliseconds(Long timeInMilliseconds) {
+        this.timeInMilliseconds = timeInMilliseconds;
     }
 
     public Integer getCreatedBy() {

@@ -1,4 +1,4 @@
-package com.tphuocthai.rest;
+package com.tphuocthai.rest.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
