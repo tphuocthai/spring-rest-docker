@@ -1,11 +1,11 @@
 package com.tphuocthai.rest.config;
 
+import com.jolbox.bonecp.BoneCPDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -29,11 +29,20 @@ public class PersistenceConfig {
 
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl(environment.getProperty("jdbc.url", "jdbc:mysql://localhost:3306/restmeasure"));
+        BoneCPDataSource dataSource = new BoneCPDataSource();
+        dataSource.setDriverClass("com.mysql.jdbc.Driver");
+        dataSource.setJdbcUrl(environment.getProperty("jdbc.url", "jdbc:mysql://localhost:3306/restmeasure"));
         dataSource.setUsername(environment.getProperty("jdbc.username", "root"));
         dataSource.setPassword(environment.getProperty("jdbc.password", ""));
+
+        // Connection pooling settings
+        dataSource.setIdleConnectionTestPeriodInMinutes(60);
+        dataSource.setIdleMaxAgeInMinutes(240);
+        dataSource.setMaxConnectionsPerPartition(30);
+        dataSource.setMinConnectionsPerPartition(10);
+        dataSource.setPartitionCount(3);
+        dataSource.setAcquireIncrement(5);
+        dataSource.setStatementsCacheSize(100);
         return dataSource;
     }
 
