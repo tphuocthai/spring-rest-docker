@@ -75,4 +75,12 @@ public class RestMeasure extends AbstractPersistable<Long> {
     public void setLastUpdatedAt(Long lastUpdatedAt) {
         this.lastUpdatedAt = lastUpdatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "RestMeasure{" +
+                "restMethodName='" + restMethodName + '\'' +
+                ", restMethod='" + restMethod + '\'' +
+                '}';
+    }
 }

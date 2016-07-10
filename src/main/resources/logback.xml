@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SPRING" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/springframework.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="HIBERNATE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/hibernate.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="REST" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/default.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="debug" additivity="false">
+        <appender-ref ref="SPRING" />
+    </logger>
+
+    <logger name="org.hibernate" level="debug" additivity="false">
+        <appender-ref ref="HIBERNATE" />
+    </logger>
+
+    <logger name="com.tphuocthai.rest" level="debug" additivity="false">
+        <appender-ref ref="REST" />
+    </logger>
+
+    <root level="off">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
