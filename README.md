@@ -1,4 +1,4 @@
-# srping-rest-docker
+# spring-rest-docker
 
 This demo for building maven CRUD app and deploy using docker.
 
