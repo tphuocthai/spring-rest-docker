@@ -1,18 +1,47 @@
-restapp:
-  build: .
-  ports:
-    - "8080:8080"
-  environment:
-    jdbc.username: restuser
-    jdbc.password: vavRavugun
-    jdbc.url: jdbc:mysql://restdb:3306/restmeasure
-  links:
-    - restdb
+version: "2"
+services:
+  nginx:
+    build: ./nginx/
+    working_dir: "/etc/nginx"
+    ports:
+      - "80:80"
+    links:
+      - consul
 
-restdb:
-  image: mysql:5.7
-  environment:
-    MYSQL_ROOT_PASSWORD: paujTaiwry
-    MYSQL_USER: restuser
-    MYSQL_PASSWORD: vavRavugun
-    MYSQL_DATABASE: restmeasure
+  restapp:
+    build: .
+    ports:
+      - "8080"
+    environment:
+      SERVICE_NAME: restapp
+      jdbc.username: restuser
+      jdbc.password: vavRavugun
+      jdbc.url: jdbc:mysql://restdb:3306/restmeasure
+    links:
+      - restdb
+
+  restdb:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: paujTaiwry
+      MYSQL_USER: restuser
+      MYSQL_PASSWORD: vavRavugun
+      MYSQL_DATABASE: restmeasure
+
+  # Consul and registrator container
+  consul:
+    image: gliderlabs/consul-server
+    ports:
+      - "8300:8300"
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:53/udp"
+    command: "-server -bootstrap"
+
+  registrator:
+    image: gliderlabs/registrator
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock"
+    links:
+      - consul
+    command: consul://consul:8500
