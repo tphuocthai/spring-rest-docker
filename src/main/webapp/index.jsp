@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=iso-8859-1" language="java"  %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,8 @@
 </head>
 <body>
     <h1>Simple RESTfull APP</h1>
+    <h2>Host IP: <small><%= request.getLocalAddr() %></small></h2>
+
     <h2>Technology Used</h2>
     <ul>
         <li>Spring MVC</li>
